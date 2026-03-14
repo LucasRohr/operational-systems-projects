@@ -1,4 +1,4 @@
-# sh-codes
+# operational-systems-projects
 
 Systems programming exercises covering shell scripting, processes, threads, and IPC.
 
@@ -11,15 +11,18 @@ Systems programming exercises covering shell scripting, processes, threads, and 
 ## Programs
 
 ### Class 01
+
 - `dir_monitor.sh` - Directory monitoring with change detection and command triggering
 
 ### Class 02
+
 - `process_chain.c` - Recursive process chain creation
 - `process_files.c` - Parallel file writing with child processes
 - `process_colab.c` - Web scraping with pipes (requires `curl`)
 - `process_figlet.c` - Signal-driven text display (requires `figlet`)
 
 ### Class 03
+
 - `thread_chain.c` - Recursive thread chain creation
 - `thread_colab.c` - Ordered thread execution without mutexes
 - `prime_numbers_seq.c` - Sequential prime number calculation
