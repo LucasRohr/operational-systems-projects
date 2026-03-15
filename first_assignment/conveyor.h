@@ -8,6 +8,8 @@
 #define NUM_CONSUMERS       3   // um consumidor por nível de qualidade
 #define QUEUE_CAPACITY      50  // capacidade de cada fila de qualidade
 #define NUM_QUALITY_LEVELS  3   // número de níveis de qualidade
+#define NUM_PRODUCT_TYPES   3   // número de tipos de produto
+#define GENERATED_PRODUCTS  10  // número de produtos gerados por produtor
 
 // Nomes dos objetos de memória compartilhada e semáforos
 #define SHM_NAME        "/conveyor_shm"
