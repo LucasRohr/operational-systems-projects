@@ -6,14 +6,6 @@
 #include <semaphore.h>
 #include "conveyor.h"
 
-// Nomes dos semáforos por qualidade, na mesma ordem de Quality (BAD=0, MEDIUM=1, GOOD=2)
-static const char *SEM_EMPTY_NAMES[NUM_QUALITY_LEVELS] = {
-    SEM_EMPTY_BAD, SEM_EMPTY_MED, SEM_EMPTY_GOOD
-};
-static const char *SEM_FULL_NAMES[NUM_QUALITY_LEVELS] = {
-    SEM_FULL_BAD, SEM_FULL_MED, SEM_FULL_GOOD
-};
-
 // Nomes dos tipos de produto para exibição no terminal
 static const char *PRODUCT_TYPE_NAMES[NUM_PRODUCT_TYPES] = {
     "Eletronico", "Alimenticio", "Fragil"
@@ -60,6 +52,7 @@ static void generate_products(Conveyor *conveyor, int producer_id,
         clock_gettime(CLOCK_REALTIME, &product.timestamp_in); // registra entrada na esteira
 
         conveyor_enqueue(conveyor, product); // insere o produto na esteira
+
         conveyor->total_produced++; // incrementa o total de produtos inseridos na esteira
         conveyor->produced_by_quality[product.quality]++; // incrementa a contagem de produtos por qualidade
         conveyor->produced_by_type[product.type]++; // incrementa a contagem de produtos por tipo
@@ -67,12 +60,13 @@ static void generate_products(Conveyor *conveyor, int producer_id,
         sem_post(sem_mutex); // sai da seção crítica
         sem_post(sem_full[product.quality]); // sinaliza item disponível
 
-        printf("[PRODUTOR %d] Produto #%d | Tipo: %-12s | Nome: %-12s | Qualidade: %s | Tempo de producao: %.0f ms\n",
+        printf("[PRODUTOR %d] Produto #%d | Tipo: %-12s | Nome: %-12s | Qualidade: %s | Tempo de producao: %.0f ms | Tempo de entrada na esteira: %.0f ms\n",
                producer_id, product.id,
                PRODUCT_TYPE_NAMES[product.type],
                product.name,
                QUALITY_NAMES[product.quality],
-               product.production_time_ms);
+               product.production_time_ms,
+               timespec_diff_ms(product.timestamp_in, current_time));
         fflush(stdout);
     }
 }
