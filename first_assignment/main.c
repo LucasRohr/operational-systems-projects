@@ -31,8 +31,7 @@ static const char *SEM_FULL_NAMES[NUM_QUALITY_LEVELS] = {
 
 int main(void) {
     // Cria e mapeia a memória compartilhada
-    // A Conveyor precisa estar em shared memory para que todos os processos filhos leiam e escrevam na mesma região.
-    // Todos os processos filhos leem e escrevem na mesma região.
+    // A Conveyor (esteira) precisa estar em shared memory para que todos os processos filhos leiam e escrevam na mesma região.
 
     int shm_fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0666); // cria a memória compartilhada
 
@@ -46,7 +45,7 @@ int main(void) {
         perror("ftruncate"); return 1;
     }
 
-    // 
+    // Define um ponteiro para a esteira na memória compartilhada
     Conveyor *conveyor = mmap(NULL, sizeof(Conveyor),
                               PROT_READ | PROT_WRITE, MAP_SHARED, shm_fd, 0);
 
@@ -60,6 +59,7 @@ int main(void) {
 
     // Cria os semáforos nomeados
     // Semáforos nomeados vivem no kernel e são acessíveis por nome em qualquer processo
+    // 0666 é a permissão de leitura e escrita para todos os usuários
     sem_t *sem_mutex = sem_open(SEM_MUTEX_NAME, O_CREAT, 0666, 1);
 
     // Tratamento de erro

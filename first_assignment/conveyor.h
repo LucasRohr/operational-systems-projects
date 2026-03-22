@@ -12,7 +12,7 @@
 #define GENERATED_PRODUCTS  10  // número de produtos gerados por produtor
 
 // Nomes dos objetos de memória compartilhada e semáforos
-#define SHM_NAME        "/conveyor_shm"
+#define SHM_NAME        "/conveyor_shm" // Shared memory
 #define SEM_MUTEX_NAME  "/conveyor_mutex"
 #define SEM_EMPTY_BAD   "/conveyor_empty_bad"
 #define SEM_EMPTY_MED   "/conveyor_empty_med"
